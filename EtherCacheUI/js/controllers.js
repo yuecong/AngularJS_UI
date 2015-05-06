@@ -665,7 +665,7 @@ function AccessStaticsNgGridCtrl($scope,$http) {
     $scope.ngOptions_topURL = {
         data: 'ngData_topRequestURL',
         jqueryUIDraggable: true
-    };
+    }; //TODO: Need to figure out how to configure width of column
         $scope.ngOptions_missURL = {
         data: 'ngData',
         jqueryUIDraggable: true
