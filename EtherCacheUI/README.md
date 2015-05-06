@@ -12,5 +12,5 @@
  - `views/common/navigation.html`: Add a new item for the page in left navigation bar. the name for .state defined in `js/config.js` will be used here
 
 3. Customize each view
-  - Keep in mind all data are defined in `js/controller.js'. 
+  - Keep in mind all data are defined in `js/controller.js`. 
   - Customer UI component as your design
