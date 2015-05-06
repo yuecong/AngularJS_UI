@@ -1,0 +1,1 @@
+{"hits": {"hits": [{"sort": [1427796267000], "_type": "systeminfo", "_source": {"timeStamp": "2015-03-31T10:04:27Z", "Bps_rcv": 0, "cpu": 0, "Bps_sent": 0, "memory": 2}, "_score": null, "_index": "ats_sysinfo", "_id": "AUxwypebhGl-29m9UdPU"}], "total": 30, "max_score": null}, "_shards": {"successful": 5, "failed": 0, "total": 5}, "took": 3, "timed_out": false}
