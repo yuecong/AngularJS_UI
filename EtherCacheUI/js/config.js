@@ -65,7 +65,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             }
         })
         .state('index.access_statics', {
-            url: "/nggrid",
+            url: "/access_statics",
             templateUrl: "views/access_statics_nggrid.html",
             data: { pageTitle: 'Access Statics' },
             resolve: {

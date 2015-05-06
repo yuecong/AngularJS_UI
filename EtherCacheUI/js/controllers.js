@@ -626,10 +626,11 @@ function CachePerformanceFlotChartCtrl() {
  * AccessStaticsNgGridCtrl - Controller for access statics table. ngGrid control
  */
 function AccessStaticsNgGridCtrl($scope,$http) {
+    // Data for top 10 request URL. data, column definitions and options for ng-grid
     $scope.ngData_topRequestURL =[];
     $http.get('data/toprequestURL.json')
        .success(function (res){
-          console.log('got data');
+          //console.log('got data');
           dataSet_top_request_URL = res.aggregations.top_request_URL.buckets;
           dataSet_top_request_URL.forEach(function(d) {
               $scope.ngData_topRequestURL.push(
@@ -647,29 +648,55 @@ function AccessStaticsNgGridCtrl($scope,$http) {
         .error(function (data, status, headers, config) {
              console.log('can not get data/toprequestURL.json');
          });
-    $scope.ngData = [
-        {Name: "Moroni", Age: 60, Position: 'PR Menager', Status: 'active', Date: '12.12.2014'},
-        {Name: "Teancum", Age: 43, Position: 'CEO/CFO', Status: 'deactive', Date: '10.10.2014'},
-        {Name: "Jacob", Age: 27, Position: 'UI Designer', Status: 'active', Date: '09.11.2013'},
-        {Name: "Nephi", Age: 29, Position: 'Java programmer', Status: 'deactive', Date: '22.10.2014'},
-        {Name: "Joseph", Age: 22, Position: 'Marketing manager', Status: 'active', Date: '24.08.2013'},
-        {Name: "Monica", Age: 43, Position: 'President', Status: 'active', Date: '11.12.2014'},
-        {Name: "Arnold", Age: 12, Position: 'CEO', Status: 'active', Date: '07.10.2013'},
-        {Name: "Mark", Age: 54, Position: 'Analyst', Status: 'deactive', Date: '03.03.2014'},
-        {Name: "Amelia", Age: 33, Position: 'Sales manager', Status: 'deactive', Date: '26.09.2013'},
-        {Name: "Jesica", Age: 41, Position: 'Ruby programmer', Status: 'active', Date: '22.12.2013'},
-        {Name: "John", Age: 48, Position: 'Marketing manager', Status: 'deactive', Date: '09.10.2014'},
-        {Name: "Berg", Age: 19, Position: 'UI/UX Designer', Status: 'active', Date: '12.11.2013'}
-    ];
-
-    $scope.ngOptions_topURL = {
+    $scope.columnDefs_topRequestURL =[{field: "Request_URL"  , displayName: "Request URL",width:'auto'},
+                                      {field: "Access_Number", displayName: "Access Number",width:'auto'},
+                                      {field: "Cache_Hit_Ratio", displayName: "Cache Hit Ratio (%)",width:'auto'},
+                                      {field: "Content_Size", displayName: "Content Size (bytes)",width:'auto'},
+                                      {field: "Response_Time_min", displayName: "Response Time(min) (ms)",width:'auto'},
+                                      {field: "Response_Time_max", displayName: "Response Time(max) (ms)",width:'auto'},
+                                      {field: "Response_Time_avg", displayName: "Response Time(avg) (ms)",width:'auto'},
+                                     ];
+    $scope.ngOptions_topRequestURL = {
         data: 'ngData_topRequestURL',
+        columnDefs: 'columnDefs_topRequestURL',
         jqueryUIDraggable: true
-    }; //TODO: Need to figure out how to configure width of column
-        $scope.ngOptions_missURL = {
-        data: 'ngData',
+    }; 
+    
+    // Data for top 10 cache miss URL. data, column definitions and options for ng-grid
+    $scope.ngData_topCacheMissURL =[];
+    
+    $http.get('data/topchachemissURL.json')
+       .success(function (res){
+          //console.log('got data');
+          dataSet_top_cachemiss_URL = res.aggregations.top_request_URL.buckets;
+          dataSet_top_cachemiss_URL.forEach(function(d) {
+              $scope.ngData_topCacheMissURL.push(
+                      {     "Request_URL": d.key, //Request URL
+                            "Access_Number": +d.doc_count, //Access number
+                            "Content_Size": +Math.round(d.contentSize.value), //content size
+                            "Response_Time_min": +d.spentTime_stats.min, //response time(min)
+                            "Response_Time_max": +d.spentTime_stats.max, //access time(max)
+                            "Response_Time_avg": +Math.round(d.spentTime_stats.avg) //access time(avg)
+                        });
+            
+          });
+        })
+        .error(function (data, status, headers, config) {
+             console.log('can not get data/topchachemissURL.json');
+         });
+    $scope.columnDefs_topCacheMissURL =[{field: "Request_URL"  , displayName: "Request URL",width:'auto'},
+                                      {field: "Access_Number", displayName: "Access Number",width:'auto'},
+                                      {field: "Content_Size", displayName: "Content Size (bytes)",width:'auto'},
+                                      {field: "Response_Time_min", displayName: "Response Time(min) (ms)",width:'auto'},
+                                      {field: "Response_Time_max", displayName: "Response Time(max) (ms)",width:'auto'},
+                                      {field: "Response_Time_avg", displayName: "Response Time(avg) (ms)",width:'auto'},
+                                     ];
+    $scope.ngOptions_topCacheMissURL = {
+        data: 'ngData_topCacheMissURL',
+        columnDefs: 'columnDefs_topCacheMissURL',
         jqueryUIDraggable: true
     };
+    
 }
 
 
