@@ -4,15 +4,61 @@
  *
  */
 
+
 /**
  * MainCtrl - controller
  */
-function MainCtrl() {
+function MainCtrl($scope, ChartService) {
 
     this.userName = 'Cong Yue';
     this.helloText = 'Welcome to use EtherCache';
     this.descriptionText = 'It is an application the speed up your web contents access.';
+    
+    // activateChart flips to true once the Google 
+    // Loader callback fires
+    $scope.activateChart = false;
 
+    // This is where my data model will be stored.
+    // "visual" will contain the chart's datatable
+    $scope.dataModel = {
+        visual: {},
+        metaData: {},
+        data: {}
+    };
+
+    // First, we attempt to load the Visualization module 
+    var loadGoogle = ChartService.loadGoogleVisualization();
+    
+    // If the Google Loader request was made with no errors, 
+    // register a callback, and construct the chart data
+    // model within the callback function
+    if (loadGoogle) {
+
+        google.setOnLoadCallback(function() {
+
+            $scope.dataModel.visual.dataTable = new google.visualization.DataTable();
+
+            // Set up the dataTable and columns
+            var dataTable = $scope.dataModel.visual.dataTable;
+            dataTable.addColumn("string","Label")
+            dataTable.addColumn("number","value")
+            
+            // Populate row data
+            dataTable.addRow(["5min Hit(%)",5]);
+            dataTable.addRow(["1hour Hit(%)",13]);
+            dataTable.addRow(["CPU(%)",25]);
+            dataTable.addRow(["Memory(%)",45]);
+            dataTable.addRow(["Sent(MBps)",10]);
+            dataTable.addRow(["Recv(MBps)",20]);
+
+            // Update the model to activate the chart on the DOM
+            // Note the use of $scope.$apply since we're in the 
+            // Google Loader callback.
+            $scope.$apply(function(){
+                $scope.activateChart = true;    
+            });
+        });  
+    }
 };
 
 /**
@@ -329,3 +375,38 @@ angular
     .controller('ServerWorkloadFlotChartCtrl', ServerWorkloadFlotChartCtrl)
     .controller('CachePerformanceFlotChartCtrl', CachePerformanceFlotChartCtrl)
     .controller('AccessStaticsNgGridCtrl', AccessStaticsNgGridCtrl)
+    .factory('ChartService', googleChartService)
+
+function googleChartService() {
+    return {
+        
+        /**
+         * Loads the visualization module from the Google Charts API 
+         * if available
+         * @returns {boolean} - Returns true is successful, or false 
+         * if not available
+         */
+        loadGoogleVisualization: function() {
+            
+            // Using a try/catch block to guard against unanticipated 
+            // errors when loading the visualization lib
+            try {
+
+                // Arbitrary callback required in google.load() to 
+                // support loading after initial page rendering
+                google.load('visualization', '1', {
+                    'callback':'console.log(\'success\');', 
+                    'packages':['corechart','gauge']
+                });
+               
+                return true;
+            
+            } catch(e) {
+                console.log('Could not load Google lib', e);
+                return false;  
+            }
+
+        }
+    };
+}
+
