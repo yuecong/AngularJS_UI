@@ -14,14 +14,16 @@ function MainCtrl($scope,$interval, ChartService) {
     this.helloText = 'Welcome to use EtherCache';
     this.descriptionText = 'It is an application the speed up your web contents access.';
     $scope.rand_num = 1;
+    
     $interval(
         function() {
             //console.log($scope.rand_num);
             $scope.rand_num = parseInt(Math.random() *100);
         },1000);
+
     // activateChart flips to true once the Google 
     // Loader callback fires
-    $scope.activateChart = false;
+    //$scope.activateChart = false;
 
     // This is where my data model will be stored.
     // "visual" will contain the chart's datatable
@@ -55,13 +57,24 @@ function MainCtrl($scope,$interval, ChartService) {
             dataTable.addRow(["Memory(%)",45]);
             dataTable.addRow(["Sent(MBps)",10]);
             dataTable.addRow(["Recv(MBps)",20]);
-
-            // Update the model to activate the chart on the DOM
+             // Update the model to activate the chart on the DOM
             // Note the use of $scope.$apply since we're in the 
             // Google Loader callback.
             $scope.$apply(function(){
                 $scope.activateChart = true;    
             });
+            
+            $interval(
+                function() {
+                rand_num = parseInt(Math.random() *100);
+                //row,col,value
+                dataTable.setValue(0,1,rand_num);
+                rand_num = parseInt(Math.random() *100);
+                //row,col,value
+                dataTable.setValue(1,1,rand_num);
+            
+        },1000);
+        
         });  
     }
 };

@@ -130,9 +130,12 @@ function googleChart($timeout) {
                     if (model.title) {
                         options.title = model.title;
                     }
-                    
                     var googleChart = new google.visualization[chartType]($elem[0]);
+                    setInterval( function() {
+                        googleChart.draw(dt,options)
+                    },1000);
                     googleChart.draw(dt,options)
+                    
                 }
             };
 
