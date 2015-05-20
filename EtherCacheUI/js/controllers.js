@@ -8,12 +8,17 @@
 /**
  * MainCtrl - controller
  */
-function MainCtrl($scope, ChartService) {
+function MainCtrl($scope,$interval, ChartService) {
 
     this.userName = 'Cong Yue';
     this.helloText = 'Welcome to use EtherCache';
     this.descriptionText = 'It is an application the speed up your web contents access.';
-    
+    $scope.rand_num = 1;
+    $interval(
+        function() {
+            //console.log($scope.rand_num);
+            $scope.rand_num = parseInt(Math.random() *100);
+        },1000);
     // activateChart flips to true once the Google 
     // Loader callback fires
     $scope.activateChart = false;
@@ -44,8 +49,8 @@ function MainCtrl($scope, ChartService) {
             dataTable.addColumn("number","value")
             
             // Populate row data
-            dataTable.addRow(["5min Hit(%)",5]);
-            dataTable.addRow(["1hour Hit(%)",13]);
+            dataTable.addRow(["5min Hit(%)",95]);
+            dataTable.addRow(["1hour Hit(%)",80]);
             dataTable.addRow(["CPU(%)",25]);
             dataTable.addRow(["Memory(%)",45]);
             dataTable.addRow(["Sent(MBps)",10]);
