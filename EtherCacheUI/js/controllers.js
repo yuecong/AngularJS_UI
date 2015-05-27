@@ -13,14 +13,15 @@ function MainCtrl($scope,$interval, ChartService) {
     this.userName = 'Cong Yue';
     this.helloText = 'Welcome to use EtherCache';
     this.descriptionText = 'It is an application the speed up your web contents access.';
-    $scope.rand_num = 1;
-    
+//    $scope.rand_num = 1;
+/*
     $interval(
         function() {
             //console.log($scope.rand_num);
             $scope.rand_num = parseInt(Math.random() *100);
         },1000);
-
+*/
+    
     // activateChart flips to true once the Google 
     // Loader callback fires
     //$scope.activateChart = false;
@@ -72,6 +73,18 @@ function MainCtrl($scope,$interval, ChartService) {
                 rand_num = parseInt(Math.random() *100);
                 //row,col,value
                 dataTable.setValue(1,1,rand_num);
+                rand_num = parseInt(Math.random() *100);
+                //row,col,value
+                dataTable.setValue(2,1,rand_num);
+                rand_num = parseInt(Math.random() *100);
+                //row,col,value
+                dataTable.setValue(3,1,rand_num);
+                rand_num = parseInt(Math.random() *100);
+                //row,col,value
+                dataTable.setValue(4,1,rand_num);
+                rand_num = parseInt(Math.random() *100);
+                //row,col,value
+                dataTable.setValue(5,1,rand_num);
             
         },1000);
         
@@ -84,12 +97,12 @@ function MainCtrl($scope,$interval, ChartService) {
  * 
  */
 
-function ServerWorkloadFlotChartCtrl() {
+function ServerWorkloadFlotChartCtrl($scope,$interval) {
 
     /**
      * Line Chart Data
      */
-    var lineAreaData = [
+    var lineAreaData1 = [
         {
             label: "line",
             data: [
@@ -109,7 +122,40 @@ function ServerWorkloadFlotChartCtrl() {
             ]
         }
     ]
-
+    var lineAreaData2 = [
+        {
+            label: "line",
+            data: [
+                [1, 34],
+                [2, 22],
+                [3, 19],
+                [4, 12],
+                [5, 32],
+                [6, 54],
+                [7, 23],
+                [8, 57],
+                [9, 12],
+                [10, 24],
+                [11, 44],
+                [12, 64],
+                [13, 21]
+            ]
+        }
+    ]
+    var rand_num =1;
+    $interval(
+        function() {
+            //console.log($scope.rand_num);
+            rand_num = parseInt(Math.random() *100);
+            data = lineAreaData1[0]['data'];
+            for (var i = data.length ; i > 1; i--) {
+                    console.log(data[i-2]);
+                    y_value = data[i-2][1];
+                    data[i-1] = [i, y_value ];
+            }
+            data[0] =[1,rand_num];
+        },1000);
+    
     /**
      * Line Area Chart Options
      */
@@ -224,7 +270,8 @@ function ServerWorkloadFlotChartCtrl() {
     //this.flotLineOptions = lineOptions;
     //this.flotPieData = pieData;
     //this.flotPieOptions = pieOptions;
-    this.flotLineAreaData = lineAreaData;
+    this.flotLineAreaData1 = lineAreaData1;
+    this.flotLineAreaData2 = lineAreaData2;
     this.flotLineAreaOptions = lineAreaOptions;
     this.flotMultiData = multiData;
     this.flotMultiOptions = multiOptions;
