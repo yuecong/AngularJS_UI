@@ -86,7 +86,7 @@ function MainCtrl($scope,$interval, ChartService) {
                 //row,col,value
                 dataTable.setValue(5,1,rand_num);
             
-        },1000);
+        },1000*60);
         
         });  
     }
@@ -154,7 +154,7 @@ function ServerWorkloadFlotChartCtrl($scope,$interval) {
                     data[i-1] = [i, y_value ];
             }
             data[0] =[1,rand_num];
-        },1000);
+        },1000*10);
     
     /**
      * Line Area Chart Options
