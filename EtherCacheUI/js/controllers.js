@@ -11,8 +11,8 @@
 function MainCtrl($scope,$interval, ChartService) {
 
     this.userName = 'Cong Yue';
-    this.helloText = 'Welcome to use EtherCache';
-    this.descriptionText = 'It is an application the speed up your web contents access.';
+    this.helloText = 'Welcome to EtherCACHE';
+    this.descriptionText = '';
 //    $scope.rand_num = 1;
 /*
     $interval(
